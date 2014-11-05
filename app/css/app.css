@@ -43,6 +43,8 @@ body {
 .stick-it ul li p{
   font-family:"Reenie Beanie",arial,sans-serif;
   font-size:180%;
+  word-wrap: break-word;
+
 }
 
 .stick-it ul,li{
@@ -62,6 +64,7 @@ body {
   height:10em;
   width:10em;
   padding:1em;
+
   -moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
   -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
   box-shadow: 5px 5px 7px rgba(33,33,33,.7);
@@ -104,3 +107,4 @@ body {
   float:left !important;
 
 }
+

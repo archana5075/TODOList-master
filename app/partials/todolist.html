@@ -26,6 +26,7 @@
     <tr>
      <th>Description</th>
      <th>Complete</th> 
+     <th>Add to Board</th>
     <th>Remove</th>  
    </tr>
  </thead>
@@ -33,7 +34,7 @@
   <tr ng-repeat="task in taskList | orderByPriority" ng-class="{done: task.done}" ng-show="hideTask(task.edate)" >
     <td><div>{{ task.taskname }}</div></td> 
     <td><div><input type="checkbox" ng-model="task.done"  ng-change="taskList.$save(task.$id)" ></div></td>
-
+    <td><div><button type="submit" ng-click="sendToBoard(task)"> Pin It!</button></div></td>
     <td><i class="glyphicon glyphicon-remove" type="submit" ng-click="taskList.$remove(task.$id)"></i></td>
  </tr>
  </tbody>	

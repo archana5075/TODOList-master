@@ -10,6 +10,9 @@ angular.module('myApp', [
   ]).
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/', {templateUrl: 'partials/landing_page.html', controller: 'LandingPageController'});
-  $routeProvider.when('/todolist', {templateUrl: 'partials/todolist.html', controller: 'TodoListController'})	
+  $routeProvider.when('/todolist', {templateUrl: 'partials/todolist.html', controller: 'TodoListController'});
+  $routeProvider.when('/register', {templateUrl:'partials/register.html', controller:'AuthController'});	
+  $routeProvider.when('/login', {templateUrl:'partials/login.html', controller:'AuthController'});  
+
   $routeProvider.otherwise({redirectTo: '/'});
 }]);
