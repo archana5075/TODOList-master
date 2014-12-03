@@ -6,11 +6,8 @@ angular.module('myApp.controllers', [])
   .controller('LandingPageController',[function(){
 
   }])
-  .controller('TodoListController',['$scope','$firebase', 'FIREBASE_URL', function($scope, $firebase, FIREBASE_URL){
-      
-      var taskRef = new Firebase(FIREBASE_URL);
-      $scope.taskList = $firebase(taskRef);
-
+  .controller('TodoListController',['$scope', 'taskService','authService', function($scope, taskService, authService){     
+        
         function dateDiffInDays(a, b) {
             var _MS_PER_DAY = 1000 * 60 * 60 * 24;
             // Discard the time and time-zone information.
@@ -24,32 +21,38 @@ angular.module('myApp.controllers', [])
             var today =  new Date();
             return dateDiffInDays(today, eventE);
         };
-
         $scope.hideTask = function(e){
           return ($scope.daysTill(e) <= 0 ) ? true: false;
         };
-
          var createEndDate = function(){
            var expirydate = new Date();
           expirydate.setDate(expirydate.getDate() + 7);
           var endDate = (expirydate.getMonth()+1) + '/' + expirydate.getDate() + '/' + expirydate.getFullYear();
           return endDate; 
-        }
-        
+        }   
         var endDate = createEndDate();
-        $scope.newTask = {taskname:'', done:false, edate: endDate };
-        $scope.saveTask =  function(){
-         $scope.taskList.$add($scope.newTask);
+
+        //Bind user's tasklist to  $scope.taskList
+        authService.getCurrentUser().then(function(user){
+             if(user){
+              $scope.taskList = taskService.getTaskListByUserId(user.id);
+             };
+        })
+
+         //Bind Firebase taskList to scope.
+         //$scope.taskList = taskService.taskList;
          $scope.newTask = {taskname:'', done:false, edate: endDate };
+    
+        $scope.saveTask =  function(){
+          taskService.saveTask($scope.newTask, $scope.currentUser.id);
+          $scope.newTask = {taskname:'', done:false, edate: endDate };
         };
 
         $scope.sendToBoard = function(task){
            var newEndDate = createEndDate();
            task.edate = newEndDate;
            $scope.taskList.$save(task.$id);
-        };
-
-      
+        };    
 
   }])
   .controller('AuthController',['$scope', 'authService', function($scope, authService){  
